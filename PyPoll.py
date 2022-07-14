@@ -5,6 +5,8 @@
 #4. total number of votes each candidate won
 #5. winner of the election based on popular vote
 
+
+
 #add our dependencies
 
 import csv
@@ -20,33 +22,71 @@ import numpy
 
 file_to_load = 'C:/Users/ajkri/Documents/bootcamp/analysis_projects/Election_Analysis/resources/election_results.csv'
 file_to_save = 'C:/Users/ajkri/Documents/bootcamp/analysis_projects/Election_Analysis/analysis/election_analysis.txt'
-#file_to_save = os.path.join("analysis", "election_analysis.txt")
-
+#other options:
 #file_to_load = os.path.join("resources", "election_results.csv")
-#os.path should work, but the directory is different when I run the code in terminal
+#file_to_save = os.path.join("analysis", "election_analysis.txt")
+#os.path should work, but the directory is not automatically set to the same file when I run the code in terminal
 
 #Perform analysis
 
+#initialize vote counter at 0
+total_votes = 0
+
+#Declare empty lists and dictionaries
+candidate_options = []
+candidate_votes = {}
+
+#Declare variables for the winning candidate
+winning_candidate = "" #empty string value
+winning_count = 0
+winning_percentage = 0
+
 with open(file_to_load, 'r') as election_data:
 
-    #To do: read and analyze data here
+    #To do: read and analyze data
     file_reader=csv.reader(election_data)
 
-    #Read and print the header row
+    #Read and skip the header row in the count
     headers = next(file_reader)
-    print(headers)
-
+    
     #Print each row in the CSV file
     for row in file_reader:
-        print(row)
+        total_votes += 1
+
+        #Add candidate names to the list
+        candidate_name = row[2]
+
+        if candidate_name not in candidate_options:
+            candidate_options.append(candidate_name)
+        #Begin tracking that candidate's vote count
+            candidate_votes[candidate_name] = 0
+        candidate_votes[candidate_name] += 1
+
+#calculate vote percentages and output them with the rest of the data
+for candidate_name in candidate_votes:
+    votes = candidate_votes[candidate_name]
+    vote_percentage = float(votes) / float(total_votes) * 100
+    print(f"{candidate_name}: received {vote_percentage:,.1f}% of the vote.")
 
 
-#Close the file -- may be redundant with current instructions
-#election_results.close()
+#Determine winning vote counts and candidate
+    if (votes > winning_count) and (vote_percentage > winning_percentage):
+        winning_count = votes
+        winning_percentage = vote_percentage
+        winning_candidate = candidate_name   
+
+winning_candidate_summary = (
+        f"-------------------------\n"
+        f"Winner: {winning_candidate}\n"
+        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Percentage: {winning_percentage:,.1f}\n"
+        f"-------------------------\n")
+print(winning_candidate_summary)
+
+print(f"{total_votes} votes were cast.")
 
 #Create a filename variable to a direct or indirect path to the file
 #Then use the open() function with 'w' mode to write data to the file, open as a text file
-
 
 with open(file_to_save, "w") as txt_file:
 
