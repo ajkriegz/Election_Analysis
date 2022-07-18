@@ -8,10 +8,11 @@ import os
 # Add a variable to load a file from a path.
 file_to_load = os.path.join("..", "Resources", "election_results.csv")
 # Add a variable to save the file to a path.
+
 # original code was written 
-# file_to_save = os.path.join("analysis", "election_analysis.txt")
-# but that returned errors on my end
-file_to_save = os.path.join("..", "analysis", "election_analysis.txt")
+file_to_save = os.path.join("analysis", "election_analysis.txt")
+# but I had to use the following to get os.path.join to work on my end
+# file_to_save = os.path.join("..", "analysis", "election_analysis.txt")
 
 #file_to_load = 'C:/Users/ajkri/Documents/bootcamp/analysis_projects/Election_Analysis/resources/election_results.csv'
 #file_to_save = 'C:/Users/ajkri/Documents/bootcamp/analysis_projects/Election_Analysis/analysis/election_analysis.txt'
